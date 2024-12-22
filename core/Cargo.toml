@@ -1,11 +1,11 @@
 [package]
-name = "app"
+name = "rest_commands"
 version = "0.1.0"
-description = "REST_Service: Execute arbitrary commands via REST"
+description = "REST_Commands: Execute arbitrary commands via REST"
 authors = ["Tyler Moore"]
 license = ""
 repository = ""
-default-run = "app"
+default-run = "rest_commands"
 edition = "2021"
 rust-version = "1.60"
 
@@ -15,4 +15,4 @@ rust-version = "1.60"
 shell-words = "1"
 tokio = { version = "1", features = ["full"] }
 hyper = { version = "1", features = ["full"] }
-hyper-services = { path = "../trm-rust-libs/hyper-services" }
+hyper-services = { path = "../../trm-rust-libs/hyper-services" }

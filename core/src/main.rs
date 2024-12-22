@@ -3,11 +3,11 @@ use std::{
     net::{IpAddr, Ipv4Addr},
 };
 
-use app::Handler;
 use hyper_services::{
     service::{stateful_service::StatefulService, stateless_service::StatelessService},
     spawn_server,
 };
+use rest_commands::Handler;
 
 #[tokio::main]
 async fn main() {

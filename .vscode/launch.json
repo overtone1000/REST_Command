@@ -13,7 +13,8 @@
                     "test",
                     "--no-run",
                     "--lib",
-                    "--package=app"
+                    "--package=app",
+                    "--manifest-path=${workspaceFolder}/core/Cargo.toml"
                 ],
                 "filter": {
                     "name": "app",
@@ -31,14 +32,18 @@
                 "args": [
                     "build",
                     "--bin=app",
-                    "--package=app"
+                    "--package=app",
+                    "--manifest-path=${workspaceFolder}/core/Cargo.toml"
                 ],
                 "filter": {
                     "name": "app",
                     "kind": "bin"
                 }
             },
-            "args": ["30123", "./dev/test_commands"],
+            "args": [
+                "30123",
+                "dev/test_commands"
+            ],
             "cwd": "${workspaceFolder}"
         },
         {
@@ -50,7 +55,8 @@
                     "test",
                     "--no-run",
                     "--bin=app",
-                    "--package=app"
+                    "--package=app",
+                    "--manifest-path=${workspaceFolder}/core/Cargo.toml"
                 ],
                 "filter": {
                     "name": "app",

@@ -1,0 +1,18 @@
+[package]
+name = "app"
+version = "0.1.0"
+description = "REST_Service: Execute arbitrary commands via REST"
+authors = ["Tyler Moore"]
+license = ""
+repository = ""
+default-run = "app"
+edition = "2021"
+rust-version = "1.60"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+shell-words = "1"
+tokio = { version = "1", features = ["full"] }
+hyper = { version = "1", features = ["full"] }
+hyper-services = { path = "../trm-rust-libs/hyper-services" }

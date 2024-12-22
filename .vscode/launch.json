@@ -7,17 +7,17 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in library 'app'",
+            "name": "Debug unit tests in library 'rest_commands'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
                     "--lib",
-                    "--package=app",
+                    "--package=rest_commands",
                     "--manifest-path=${workspaceFolder}/core/Cargo.toml"
                 ],
                 "filter": {
-                    "name": "app",
+                    "name": "rest_commands",
                     "kind": "lib"
                 }
             },
@@ -27,16 +27,16 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'app'",
+            "name": "Debug executable 'rest_commands'",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=app",
-                    "--package=app",
+                    "--bin=rest_commands",
+                    "--package=rest_commands",
                     "--manifest-path=${workspaceFolder}/core/Cargo.toml"
                 ],
                 "filter": {
-                    "name": "app",
+                    "name": "rest_commands",
                     "kind": "bin"
                 }
             },
@@ -49,17 +49,17 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'app'",
+            "name": "Debug unit tests in executable 'rest_commands'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
-                    "--bin=app",
-                    "--package=app",
+                    "--bin=rest_commands",
+                    "--package=rest_commands",
                     "--manifest-path=${workspaceFolder}/core/Cargo.toml"
                 ],
                 "filter": {
-                    "name": "app",
+                    "name": "rest_commands",
                     "kind": "bin"
                 }
             },

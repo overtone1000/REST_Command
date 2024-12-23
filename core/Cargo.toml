@@ -15,4 +15,6 @@ rust-version = "1.60"
 shell-words = "1"
 tokio = { version = "1", features = ["full"] }
 hyper = { version = "1", features = ["full"] }
-hyper-services = { path = "../../trm-rust-libs/hyper-services" }
+#hyper-services = { path = "../../trm-rust-libs/hyper-services" }
+#hyper-services = { git = "file:///home/tyler/repos/trm-rust-libs/" } #works but needs absolute path
+hyper-services = { git = "https://github.com/overtone1000/trm-rust-libs" }

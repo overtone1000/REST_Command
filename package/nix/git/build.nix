@@ -1,5 +1,6 @@
 { pkgs ? import <nixpkgs> { }, port ? 30123, dir ? "/var", ... }:
 #Ensure nixpkgs is up to date. Check the channel currently used with sudo nix-channel --list (it's the one named nixos) and the rustc version with rustc -V
+#This requires git installed systemwide in environment.systemPackages. Build the system to install git, then rebuild to install this config.
 let 
   repo = fetchGit {
     url = "https://github.com/overtone1000/REST_Commands.git";
@@ -18,7 +19,7 @@ let
     #cargoHash = ""; #Determine correct checksum by attempting build and viewing error output
     cargoLock={
       lockFile = (lock);
-      #allowBuiltinFetchGit = true;
+      allowBuiltinFetchGit = true;
     };
   };
 in

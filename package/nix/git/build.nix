@@ -29,7 +29,7 @@ in
   systemd.services.rest_command = {
     wantedBy = ["multi-user.target"];
     after = ["network.target"];
-    script = "${package}/bin/manifest.name ${port} ${dir}";
+    script = "${package}/bin/${manifest.name} ${port} ${dir}";
     serviceConfig = {
       Restart = "always";
     };

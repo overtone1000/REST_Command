@@ -4,6 +4,7 @@
 let 
   repo = fetchGit {
     url = "https://github.com/overtone1000/REST_Commands.git";
+    ref = "main"; #this does seem to be necessary
     shallow = true;
   };
 
@@ -20,9 +21,9 @@ let
     cargoLock={
       lockFile = (lock);
       allowBuiltinFetchGit = true;
-      outputHashes = {
-         "hyper-services-0.1.0" = hyper_hash;
-      };
+      #outputHashes = { #Not needed with allowBuiltinFetchGet
+      #   "hyper-services-0.1.0" = hyper_hash;
+      #};
     };
   };
 in

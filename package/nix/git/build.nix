@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> { }, port ? 30123, dir ? "/var", ... }:
+{ pkgs ? import <nixpkgs> { }, port ? 30123, dir ? "/var", hyper_hash ? "", ... }:
 #Ensure nixpkgs is up to date. Check the channel currently used with sudo nix-channel --list (it's the one named nixos) and the rustc version with rustc -V
 #This requires git installed systemwide in environment.systemPackages. Build the system to install git, then rebuild to install this config.
 let 
@@ -20,6 +20,9 @@ let
     cargoLock={
       lockFile = (lock);
       allowBuiltinFetchGit = true;
+      outputHashes = {
+         "hyper-services-0.1.0" = "<${hyper_hash}>";
+      };
     };
   };
 in

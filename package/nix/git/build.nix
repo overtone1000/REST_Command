@@ -21,7 +21,7 @@ let
       lockFile = (lock);
       allowBuiltinFetchGit = true;
       outputHashes = {
-         "hyper-services-0.1.0" = "<${hyper_hash}>";
+         "hyper-services-0.1.0" = ${hyper_hash};
       };
     };
   };

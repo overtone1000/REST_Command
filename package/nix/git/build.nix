@@ -3,6 +3,7 @@
 let 
   repo = fetchGit {
     url = "https://github.com/overtone1000/REST_Commands.git";
+    ref = "main";
     shallow = true;
   };
 

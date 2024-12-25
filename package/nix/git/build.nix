@@ -3,7 +3,7 @@
 let 
   repo = fetchGit {
     url = "https://github.com/overtone1000/REST_Commands.git";
-    rev = "a80abf4617c447f3bfa46100760cfb98114a8994";
+    shallow = true;
   };
 
   manifest = (pkgs.lib.importTOML ("${repo}/core/Cargo.toml")).package;
@@ -18,7 +18,7 @@ let
     #cargoHash = ""; #Determine correct checksum by attempting build and viewing error output
     cargoLock={
       lockFile = (lock);
-      allowBuiltinFetchGit = true;
+      #allowBuiltinFetchGit = true;
     };
   };
 in

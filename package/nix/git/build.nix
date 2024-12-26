@@ -6,7 +6,7 @@ let
     url = "https://github.com/overtone1000/REST_Commands.git";
     ref = "main"; #this does seem to be necessary
     #shallow = true;
-    rev = "fd7d39f60360a00678756c61b2de8a7dc4d66528"; #sometimes need to force it to rebuild
+    rev = "4ebf990e1bedd27464f033f5dfd046a1ec610e43"; #sometimes need to force it to rebuild
   };
 
   manifest = (pkgs.lib.importTOML ("${repo}/core/Cargo.toml")).package;

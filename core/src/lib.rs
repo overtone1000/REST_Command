@@ -40,7 +40,7 @@ impl StatefulHandler for Handler {
                 "Empty command.".to_string(),
             )));
         } else {
-            println!("Attempting command: {}", command_string);
+            println!("File contents: {}", command_string);
         }
 
         let (app, args) = match shell_words::split(command_string.as_str()) {
@@ -57,6 +57,9 @@ impl StatefulHandler for Handler {
                 return Ok(Response::new(full_to_boxed_body(e.to_string())));
             }
         };
+
+        println!("Command: {}", app);
+        println!("Args: {:?}", args);
 
         let fut = Command::new(app).args(args).output();
 

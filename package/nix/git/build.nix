@@ -33,6 +33,7 @@ in
     after = ["network.target"];
     script = "${package}/bin/${manifest.name} ${port} ${dir}";
     serviceConfig = {
+      User = "root";
       Restart = "always";
     };
   };

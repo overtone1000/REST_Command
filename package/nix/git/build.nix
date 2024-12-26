@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> { }, port ? 30123, dir ? "/var", hyper_hash ? pkgs.lib.fakeHash, ... }:
+{ pkgs ? import <nixpkgs> { }, port ? 30123, dir ? "/var", path ? [ pkgs.echo ], hyper_hash ? pkgs.lib.fakeHash, ... }:
 #Ensure nixpkgs is up to date. Check the channel currently used with sudo nix-channel --list (it's the one named nixos) and the rustc version with rustc -V
 #This requires git installed systemwide in environment.systemPackages. Build the system to install git, then rebuild to install this config.
 let 
@@ -33,6 +33,7 @@ in
     wantedBy = ["multi-user.target"];
     after = ["network.target"];
     script = "${package}/bin/${manifest.name} ${port} ${dir}";
+    path = path;
     serviceConfig = {
       User = "root";
       Restart = "always";

@@ -61,7 +61,7 @@ async fn main() {
     let handler = Handler::new(command_directory.clone());
 
     let event_server = spawn_server(
-        IpAddr::V4(Ipv4Addr::LOCALHOST),
+        IpAddr::V4(Ipv4Addr::UNSPECIFIED), //Bind for all traffic on this port
         port,
         StatefulService::create(handler.clone()),
     );

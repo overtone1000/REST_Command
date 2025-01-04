@@ -42,7 +42,7 @@
             },
             "args": [
                 "30123",
-                "dev/test_commands"
+                "./dev/test_commands"
             ],
             "cwd": "${workspaceFolder}"
         },

@@ -23,45 +23,30 @@ impl Handler {
 
 impl StatefulHandler for Handler {
     async fn handle_request(self: Self, request: Request<Incoming>) -> HandlerResult {
-        let method = request.method().clone();
+        let _method = request.method().clone();
         let path = request.uri().path().to_string();
 
-        let root = std::env::current_dir().expect("Should have a current directory.");
-        let absolute_path = self.command_directory.to_string() + path.as_str();
-        let file = std::path::Path::new(absolute_path.as_str());
-
-        if !file.is_file() {
-            let mess = format!("{} is not a file", absolute_path);
-            println!("{:?}", file);
-            println!("{:?}", file.is_dir());
-            println!("{:?}", file.exists());
-            let e = std::io::Error::new(std::io::ErrorKind::NotFound, mess);
-            return Err(Box::new(e));
-        }
-
-        //Set working directory to that of the file containing the command
-        match file.parent() {
-            Some(parent) => {
-                match std::env::set_current_dir(parent) {
-                    Ok(_) => (),
-                    Err(_) => {
-                        let mess = format!(
-                            "Couldn't set working directory to parent of {}",
-                            absolute_path
-                        );
-                        let e = std::io::Error::new(std::io::ErrorKind::NotFound, mess);
-                        return Err(Box::new(e));
-                    }
-                };
-            }
-            None => {
-                let mess = format!("{} has no parent directory", absolute_path);
+        let raw_path = self.command_directory.to_string() + path.as_str();
+        let file_path = match std::path::Path::new(raw_path.as_str()).canonicalize() {
+            Ok(path) => path,
+            Err(e) => {
+                let mess = format!("Couldn't expand path {}. {}", raw_path, e.to_string());
                 let e = std::io::Error::new(std::io::ErrorKind::NotFound, mess);
                 return Err(Box::new(e));
             }
         };
 
-        let command_string = match std::fs::read(file) {
+        //Get the parent directory of the file so the command can be run with that as the working directory.
+        let parent_path = match &file_path.parent() {
+            Some(parent) => parent.to_owned(),
+            None => {
+                let mess = format!("{:?} has no parent directory", file_path);
+                let e = std::io::Error::new(std::io::ErrorKind::NotFound, mess);
+                return Err(Box::new(e));
+            }
+        };
+
+        let command_string = match std::fs::read(&file_path) {
             Ok(command) => match String::from_utf8(command) {
                 Ok(command) => command,
                 Err(e) => return Ok(Response::new(full_to_boxed_body(e.to_string()))),
@@ -96,7 +81,10 @@ impl StatefulHandler for Handler {
         println!("Command: {}", app);
         println!("Args: {:?}", args);
 
-        let fut = Command::new(app).args(args).output();
+        let fut = Command::new(app)
+            .args(args)
+            .current_dir(parent_path)
+            .output();
 
         match fut.await {
             Ok(output) => {

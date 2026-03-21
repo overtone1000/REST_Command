@@ -31,7 +31,7 @@ in
 {
   systemd.services.rest_command = {
     wantedBy = ["multi-user.target"];
-    after = ["network.target"];
+    wants = [ "network-online.target" ]; #For health checkin
     script = "${package}/bin/${manifest.name} ${port} ${dir}";
     path = path;
     serviceConfig = {

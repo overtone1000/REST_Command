@@ -4,8 +4,7 @@ use std::{
 };
 
 use hyper_services::{
-    service::{stateful_service::StatefulService, stateless_service::StatelessService},
-    spawn_server,
+    service::{stateful_service::StatefulService},
 };
 use rest_commands::Handler;
 
@@ -59,14 +58,14 @@ async fn main() {
     println!("Starting REST Service");
 
     let handler = Handler::new(command_directory.clone());
-
-    let event_server = spawn_server(
+    let service = StatefulService::create(handler);
+    let service_future =service.start(
         IpAddr::V4(Ipv4Addr::UNSPECIFIED), //Bind for all traffic on this port
         port,
-        StatefulService::create(handler.clone()),
+        hyper_services::service::spawn::ConnectionProperties::default()
     );
 
-    match event_server.await {
+    match service_future.await {
         Ok(_) => println!("Closed REST Service Gracefully"),
         Err(e) => {
             println!("REST Service Failure");

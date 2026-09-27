@@ -2,9 +2,7 @@ use std::{ops::Index, process::ExitStatus};
 
 use hyper::{body::Incoming, Request, Response};
 use hyper_services::{
-    commons::{HandlerError, HandlerResult},
-    response_building::full_to_boxed_body,
-    service::{stateful_service::StatefulHandler, stateless_service::StatelessHandler},
+    commons::{HandlerError, HandlerResult}, response_building::bytes_to_boxed_body, service::{stateful_service::StatefulHandler, stateless_service::StatelessHandler}
 };
 use tokio::process::Command;
 
@@ -49,14 +47,14 @@ impl StatefulHandler for Handler {
         let command_string = match std::fs::read(&file_path) {
             Ok(command) => match String::from_utf8(command) {
                 Ok(command) => command,
-                Err(e) => return Ok(Response::new(full_to_boxed_body(e.to_string()))),
+                Err(e) => return Ok(Response::new(bytes_to_boxed_body(e.to_string()))),
             },
-            Err(e) => return Ok(Response::new(full_to_boxed_body(e.to_string()))),
+            Err(e) => return Ok(Response::new(bytes_to_boxed_body(e.to_string()))),
         };
 
         if command_string.len() == 0 {
             println!("Empty command.");
-            return Ok(Response::new(full_to_boxed_body(
+            return Ok(Response::new(bytes_to_boxed_body(
                 "Empty command.".to_string(),
             )));
         } else {
@@ -74,7 +72,7 @@ impl StatefulHandler for Handler {
             Err(e) => {
                 println!("Couldn't parse command {}", command_string);
                 println!("{}", e.to_string());
-                return Ok(Response::new(full_to_boxed_body(e.to_string())));
+                return Ok(Response::new(bytes_to_boxed_body(e.to_string())));
             }
         };
 
@@ -90,17 +88,17 @@ impl StatefulHandler for Handler {
             Ok(output) => {
                 if output.status.success() {
                     println!("{:?}", output.stdout);
-                    Ok(Response::new(full_to_boxed_body(output.stdout)))
+                    Ok(Response::new(bytes_to_boxed_body(output.stdout)))
                 } else {
                     println!("Command executed but returned failure.");
                     println!("{:?}", output.stdout);
                     println!("{:?}", output.stderr);
-                    Ok(Response::new(full_to_boxed_body(output.stderr)))
+                    Ok(Response::new(bytes_to_boxed_body(output.stderr)))
                 }
             }
             Err(e) => {
                 println!("Command failure.");
-                Ok(Response::new(full_to_boxed_body(e.to_string())))
+                Ok(Response::new(bytes_to_boxed_body(e.to_string())))
             }
         }
     }

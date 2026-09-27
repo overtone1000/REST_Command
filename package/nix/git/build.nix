@@ -6,11 +6,11 @@ let
     url = "https://github.com/overtone1000/REST_Commands.git";
     ref = "main"; #this does seem to be necessary
     shallow = true;
-    rev = "dd5a804ac73edf0590d936699b97e0b8629d30a3"; #sometimes need to force it to pull in latest rev, so update here
+    #rev = "dd5a804ac73edf0590d936699b97e0b8629d30a3"; #sometimes need to force it to pull in latest rev, so update here
   };
 
-  manifest = (pkgs.lib.importTOML ("${repo}/core/Cargo.toml")).package;
-  lock = ("${repo}/core/Cargo.lock");
+  manifest = (pkgs.lib.importTOML ("${repo}/Cargo.toml")).package; #Use the one in repo root, not the core subdirectory!
+  lock = ("${repo}/Cargo.lock"); #Need the repo root lock!!
 
   package = pkgs.rustPlatform.buildRustPackage {
     pname = manifest.name;

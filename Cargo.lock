@@ -418,7 +418,7 @@ dependencies = [
 [[package]]
 name = "hyper-services"
 version = "0.1.1"
-source = "git+https://github.com/overtone1000/trm-rust-libs#2dc92301347a0fa06ac02dfb705f64b03450b670"
+source = "git+https://github.com/overtone1000/trm-rust-libs#dd5a804ac73edf0590d936699b97e0b8629d30a3"
 dependencies = [
  "base64",
  "futures-util",
@@ -428,6 +428,7 @@ dependencies = [
  "hyper-util",
  "rcgen",
  "rustls",
+ "rustls-pki-types",
  "serde",
  "serde_json",
  "tokio",

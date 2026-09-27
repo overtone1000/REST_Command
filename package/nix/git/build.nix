@@ -5,19 +5,20 @@ let
   repo = fetchGit {
     url = "https://github.com/overtone1000/REST_Commands.git";
     ref = "main"; #this does seem to be necessary
-    shallow = true;
-    #rev = "dd5a804ac73edf0590d936699b97e0b8629d30a3"; #sometimes need to force it to pull in latest rev, so update here
+    # shallow = true; #Seems this may be what was stopping updates with "rev"
+    rev = "b5702a4d890d019f7c80cec174730c396c8d6442"; #sometimes need to force it to pull in latest rev, so update here; don't forget that cargo.lock in this version will also be used!
   };
 
-  manifest = (pkgs.lib.importTOML ("${repo}/Cargo.toml")).package; #Use the one in repo root, not the core subdirectory!
-  lock = ("${repo}/Cargo.lock"); #Need the repo root lock!!
+  manifest = (pkgs.lib.importTOML ("${repo}/Cargo.toml")).package;
+  lock = ("${repo}/Cargo.lock");
 
   package = pkgs.rustPlatform.buildRustPackage {
     pname = manifest.name;
     version = manifest.version;
     
-    src = "${repo}/core";
-
+    src = "${repo}";
+    cargoBuildFlags= [ "-p" "core" ]; #Target the core package
+    
     #cargoHash = ""; #Determine correct checksum by attempting build and viewing error output
     cargoLock={
       lockFile = (lock);
